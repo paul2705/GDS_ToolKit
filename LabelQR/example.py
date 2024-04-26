@@ -1,33 +1,42 @@
 import nazca as nd
 import nazca.geometries as geom
-from QRCode import encoder, decoder
+from QRCode import encoderStandard, decoderStandard
+from QRCode import encoderMicro, decoderMicro
 
 # ====================================Encoder Exmaple================================
 '''
-You can use encoder.makeLabelWithQRCode() to create label text with its corresponding QRCode
+You can use encoder.makeLabelWithQRCode() to create label text with its corresponding Standard QRCode or Micro QRCode
 The usage of encoder.makeLabelWithQRCode() is similar to nd.text()
-For details of parameters meanings please refer to ./QRCode/encoder.py
+For details of parameters meanings please refer to ./QRCode/encoderStandard.py or ./QRCode/encoderMicro.py
 '''
-encoder.makeLabelWithQRCode(text='D25S50WG10',height=20,align='cc',QRSize=80,layer=2).put(0)
-encoder.makeLabelWithQRCode(text='ABC',height=40,align='cc',layer=2).put(200, 400)
-encoder.makeLabelWithQRCode(text='TEST',height=80,align='cc',layer=1).put(-200, 800)
+encoderStandard.makeLabelWithQRCode(text='D25S50WG10',height=20,align='cc',QRSize=80,KlayoutDecode=True,layer=2).put(0)
+encoderStandard.makeLabelWithQRCode(text='D50S150WG6',height=20,align='cc',QRSize=80,layer=2).put(600)
+encoderStandard.makeLabelWithQRCode(text='ABC',height=40,align='cc',layer=2).put(200, 400)
+encoderStandard.makeLabelWithQRCode(text='TEST',height=80,align='cc',layer=1).put(-200, 800)
+
+encoderMicro.makeLabelWithQRCode(text='D250S6WG8',height=20,align='cc',layer=3).put(400, 200)
+
 nd.export_gds()
 
 
 # ====================================Decoder Exmaple================================
 '''
-You can use decoder.readQRCode() to detect text (label) from QRCode in the specified image
+You can use decoder.readQRCode() to detect text (label) from Standard QRCode or Micro QRCode in the specified image
 Use several different method to detect texts from QRCodes
-For details of parameters meanings please refer to ./QRCode/decoder.py
+For details of parameters meanings please refer to ./QRCode/decoderStandard.py or ./QRCode/decoderMicro.py
 '''
+
 print('==============================exmaple 1==============================')
-print(decoder.readQRCode("./QRCode/example1.png"))
+print(decoderStandard.readQRCode("./QRCode/example1.png"))
 print('==============================exmaple 2==============================')
-print(decoder.readQRCode("./QRCode/example2.png"))
+print(decoderStandard.readQRCode("./QRCode/example2.png"))
 print('==============================exmaple 3==============================')
-print(decoder.readQRCode("./QRCode/example3.png"))
+print(decoderStandard.readQRCode("./QRCode/example3.png"))
 print('==============================exmaple 4==============================')
-print(decoder.readQRCode("./QRCode/example4.png"))
+print(decoderStandard.readQRCode("./QRCode/example4.png"))
+
+print('==============================exmaple 5==============================')
+print(decoderMicro.readQRCode("./QRCode/example6.png"))
 
 # ====================================nazca exmaple================================
 # frame = nd.Polygon(layer=19, points=[(0,0), (220,0), (220,180), (0,180)])

@@ -2,27 +2,27 @@ from qreader import QReader
 import cv2
 import numpy as np
 
-def readQRCode(ImgPath, KlayoutView = 1):
+def readQRCode(ImgPath, KlayoutDecode = 1):
     """Read QRCode included in the screenshot of Klayout / Other view (not yet implement) 
     Use several different methods to detect QRCode to increase the hit rate.
    
     Args:
         ImgPath (String): the file path of the Image that needs to read QRCode
-        (Optional) KlayoutView: If it is Klayout View (KlayoutView=1), we implement some method to detect QRCode. Default: 1
+        (Optional) KlayoutDecode: If it is Klayout View (KlayoutDecode=1), we implement some method to detect QRCode. Default: 1
 
     Returns:
         detected_text (tuple): a tuple of detected text from QRCodes. If no valid QRCode detected, return None
     """
     # Create a QReader instance
-    qreader = QReader(model_size='s')
+    qreader = QReader(model_size='l')
 
     # Get the image that contains the QR code
     image = cv2.cvtColor(cv2.imread(ImgPath), cv2.COLOR_BGR2RGB)
-    if KlayoutView == 0:
+    if KlayoutDecode == 0:
         # Use the detect_and_decode function to get the decoded QR data
         return qreader.detect_and_decode(image=image)
 
-    if KlayoutView == 1:
+    if KlayoutDecode == 1:
         N, M, C = image.shape
         # newImg = image[::]
         print("Origin Image Attempt: 0")

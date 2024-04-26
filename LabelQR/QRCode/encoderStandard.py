@@ -7,7 +7,7 @@ from PIL import Image
 import pathlib
 import numpy as np
 
-def makeLabelWithQRCode(text, height, align, QRSize=None, layer=20, QRSavePath=None):
+def makeLabelWithQRCode(text, height, align, QRSize=None, layer=20, KlayoutDecode=False, QRSavePath=None):
     """An extended function to render a text with its corresponding QRCode 
    
     Args:
@@ -16,6 +16,7 @@ def makeLabelWithQRCode(text, height, align, QRSize=None, layer=20, QRSavePath=N
         align (String): relative placement, examples: 'lc', 'cc', 'tr'
         (Optional) QRSize (Float): QRCode size will be (QRSize,QRSize) in um, default will be (4*height, 4*height)
         (Optional) layer (Int): layer reference to generate label and QRCode, default will be 20
+        (Optional) KlayoutDecode: If it is Klayout View (KlayoutDecode=1), we implement some method to detect QRCode. Default: False
         (Optional) QRSavePath (String): the path you want to save created QRCode (If you want to save it)
 
     Returns:
@@ -55,11 +56,11 @@ def makeLabelWithQRCode(text, height, align, QRSize=None, layer=20, QRSavePath=N
                 if value != on:
                     on = value
                     if on: 
-                        xstart = x + 3
+                        xstart = x + 3*KlayoutDecode
                     else:
                         # image_geo.insert(db.Box(xstart, y, int(np.max([x-3,xstart])), y + 1) * pixelSize)
                         xl = xstart * pixelSize
-                        xr = int(np.max([x - 3, xstart])) * pixelSize
+                        xr = int(np.max([x - 3*KlayoutDecode, xstart])) * pixelSize
                         yl = -y * pixelSize
                         yr = (-y - 1) * pixelSize
                         nd.Polygon(layer=layer, points=[(xl, yl), (xr, yl), (xr, yr), (xl, yr)]).put(startPoint)
@@ -67,7 +68,7 @@ def makeLabelWithQRCode(text, height, align, QRSize=None, layer=20, QRSavePath=N
             if on: 
                 # image_geo.insert(db.Box(xstart, y, image.width(), y + 1) * pixelSize)
                 xl = xstart * pixelSize
-                xr = int(np.max([M - 3, xstart])) * pixelSize
+                xr = int(np.max([M - 3*KlayoutDecode, xstart])) * pixelSize
                 yl = -y * pixelSize
                 yr = (-y - 1) * pixelSize
                 nd.Polygon(layer=layer, points=[(xl, yl), (xr, yl), (xr, yr), (xl, yr)]).put(startPoint)
