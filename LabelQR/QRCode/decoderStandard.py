@@ -55,20 +55,23 @@ def readQRCode(ImgPath, KlayoutDecode = 1):
                 print("Success!")
                 return decoded_text
 
-        newImg = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
+        newImg = Image.fromarray(image.copy())
         for _ in range(10):
             print(f"Resize Image Attempt: {_+1}")
             try:
-                newImg = cv2.resize(newImg, (0, 0), fx = 0.5, fy = 0.5, interpolation = cv2.INTER_CUBIC)
+                # newImg = cv2.resize(newImg, (0, 0), fx = 0.5, fy = 0.5, interpolation = cv2.INTER_CUBIC)
+                N, M, C = np.array(newImg).shape
+                newImg.resize((N//2,M//2))
                 # saveImage = Image.fromarray(tmpImgRet)
                 # saveImage.save(f'testh_{_}.png')
                 # cv2.imwrite(f"test_{_+1}.png",newImg)
-                decoded_text = qreader.detect_and_decode(image=newImg)
+                decoded_text = qreader.detect_and_decode(image=np.array(newImg))
                 if (len(decoded_text)>0 and decoded_text[0]!=None):
                     print("Success!")
                     return decoded_text
             except:
                 break
+
         color = (np.unique(image[:,:,0])[0],np.unique(image[:,:,1])[0],np.unique(image[:,:,2])[0])
         for i in range(N):
             for j in range(M):

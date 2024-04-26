@@ -36,7 +36,7 @@ print('==============================exmaple 4==============================')
 print(decoderStandard.readQRCode("./QRCode/example4.png"))
 
 print('==============================exmaple 5==============================')
-print(decoderMicro.readQRCode("./QRCode/example6.png"))
+print(decoderMicro.readQRCode("./QRCode/example5.png"))
 
 # ====================================nazca exmaple================================
 # frame = nd.Polygon(layer=19, points=[(0,0), (220,0), (220,180), (0,180)])

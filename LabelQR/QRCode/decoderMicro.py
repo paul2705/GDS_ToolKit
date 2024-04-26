@@ -9,17 +9,21 @@ def readQRCode(ImgPath, KlayoutDecode = 1):
         ImgPath (String): the file path of the Image that needs to read QRCode
         
     Returns:
-        detected_text (list): a list of detected text from QRCodes. If no valid QRCode detected, return Empty List
+        detected_text (List): a list of detected text from QRCodes. If no valid QRCode detected, return None
     """
     # Create a QReader instance
     detector = pb.FactoryFiducial(np.uint16).microqr()
 
     # Get the image that contains the QR code
     image = pb.load_single_band(ImgPath, np.uint16)
-    print(image)
 
     # Use the detect_and_decode function to get the decoded QR data
     detector.detect(image)
-    print(len(detector.detections))
     ret = [qr.message for qr in detector.detections]
-    return ret
+    if len(ret) >= 1:
+        print("Success!")
+        return ret
+    else:
+        print("ERROR: Decode QR Code Failed!")
+
+    return None
