@@ -11,7 +11,7 @@ a extended Toolkit for Nazca:
 
 Usage:
 * Download LabelQR folder (you may git clone the repo or download repo zip [click green Code button, there will be a download zip button])
-* You can use ```pip install requirements.txt``` to install all dependency for using this ToolKit (except ```nazca```, please follow [nazca download](https://nazca-design.org/installation/) to install ```nazca```)
+* You can use ```pip install -r requirements.txt``` to install all dependency for using this ToolKit (except ```nazca```, please follow [nazca download](https://nazca-design.org/installation/) to install ```nazca```)
 * For ```decodeMicro```, if you encounter this kind of error:
   * ![error](LabelQR/doc/MicroError.png)
   * [Official Github Repo Corresponding Issue Link](https://github.com/lessthanoptimal/PyBoof/issues/27)
