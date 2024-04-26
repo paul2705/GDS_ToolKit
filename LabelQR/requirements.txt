@@ -1,5 +1,4 @@
 numpy==1.26.4
-opencv_python==4.9.0.80
 Pillow==10.3.0
 PyBoof==0.43.1
 qrcode==7.4.2

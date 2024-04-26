@@ -1,5 +1,5 @@
 from qreader import QReader
-import cv2
+from PIL import Image
 import numpy as np
 
 def readQRCode(ImgPath, KlayoutDecode = 1):
@@ -14,10 +14,12 @@ def readQRCode(ImgPath, KlayoutDecode = 1):
         detected_text (tuple): a tuple of detected text from QRCodes. If no valid QRCode detected, return None
     """
     # Create a QReader instance
-    qreader = QReader(model_size='l')
+    qreader = QReader(model_size='s')
 
     # Get the image that contains the QR code
-    image = cv2.cvtColor(cv2.imread(ImgPath), cv2.COLOR_BGR2RGB)
+    # image = cv2.cvtColor(cv2.imread(ImgPath), cv2.COLOR_BGR2RGB)
+    image = np.array(Image.open(ImgPath).convert('RGB'))
+    
     if KlayoutDecode == 0:
         # Use the detect_and_decode function to get the decoded QR data
         return qreader.detect_and_decode(image=image)
@@ -45,6 +47,8 @@ def readQRCode(ImgPath, KlayoutDecode = 1):
             print(f'Highly Hit Attempt: {((180-_)//20)+1}')
             tmpImg = newImg[::]
             tmpImgRet = __fillHoles(tmpImg,highColor,_)
+            # saveImage = Image.fromarray(tmpImgRet)
+            # saveImage.save(f'testh_{_}.png')
             # cv2.imwrite(f'testh_{_}.png',tmpImgRet)
             decoded_text = qreader.detect_and_decode(image=tmpImgRet)
             if (len(decoded_text)>0 and decoded_text[0]!=None):
@@ -56,6 +60,8 @@ def readQRCode(ImgPath, KlayoutDecode = 1):
             print(f"Resize Image Attempt: {_+1}")
             try:
                 newImg = cv2.resize(newImg, (0, 0), fx = 0.5, fy = 0.5, interpolation = cv2.INTER_CUBIC)
+                # saveImage = Image.fromarray(tmpImgRet)
+                # saveImage.save(f'testh_{_}.png')
                 # cv2.imwrite(f"test_{_+1}.png",newImg)
                 decoded_text = qreader.detect_and_decode(image=newImg)
                 if (len(decoded_text)>0 and decoded_text[0]!=None):
@@ -76,6 +82,8 @@ def readQRCode(ImgPath, KlayoutDecode = 1):
             print(f'Fill Holes Image Attempt: {_//5+1}')
             tmpImg = newImg[::]
             tmpImgRet = __fillHoles(tmpImg,color,_)
+            # saveImage = Image.fromarray(tmpImgRet)
+            # saveImage.save(f'testh_{_}.png')
             # cv2.imwrite(f'testh_{_}.png',tmpImgRet)
             decoded_text = qreader.detect_and_decode(image=tmpImgRet)
             if (len(decoded_text)>0 and decoded_text[0]!=None):
@@ -85,6 +93,8 @@ def readQRCode(ImgPath, KlayoutDecode = 1):
             print(f'Fill Holes Image Attempt: {(_//20)+4}')
             tmpImg = newImg[::]
             tmpImgRet = __fillHoles(tmpImg,color,_)
+            # saveImage = Image.fromarray(tmpImgRet)
+            # saveImage.save(f'testh_{_}.png')
             # cv2.imwrite(f'testh_{_}.png',tmpImgRet)
             decoded_text = qreader.detect_and_decode(image=tmpImgRet)
             if (len(decoded_text)>0 and decoded_text[0]!=None):
@@ -109,6 +119,8 @@ def readQRCode(ImgPath, KlayoutDecode = 1):
             # tmpImg = cv2.GaussianBlur(newImg, (2*int(12/(_+2))+1, 2*int(12/(_+2))+1), _)
             tmpImg = newImg[::]
             tmpImgRet = __fillHoles(tmpImg,color,80)
+            # saveImage = Image.fromarray(tmpImgRet)
+            # saveImage.save(f'testh_{_}.png')
             # cv2.imwrite(f'testh_{_}.png',tmpImgRet)
             decoded_text = qreader.detect_and_decode(image=tmpImgRet)
             if (len(decoded_text)>0 and decoded_text[0]!=None):
