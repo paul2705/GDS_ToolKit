@@ -15,7 +15,7 @@ Usage:
 * For ```decodeMicro```, if you encounter this kind of error:
   * ![error](LabelQR/doc/MicroError.png)
   * [Official Github Repo Corresponding Issue Link](https://github.com/lessthanoptimal/PyBoof/issues/27)
-  * This can be fixed by modifying the ```__init__.py``` file in the ```<python_environment_location>/site-packages/pyboof folder```, (the python_environment_location is like the path I boxed, you can copy from your error message). On line 160, change mmap_file to pbg.mmap_file like so:
+  * This can be fixed by modifying the ```__init__.py``` file in the ```<python_environment_location>/site-packages/pyboof folder```, (the ```<python_environment_location>/site-packages/pyboof folder``` is like the path I boxed, you can copy from your error message). On line 160, change mmap_file to pbg.mmap_file like so:
     ```python
     pbg.mmap_file = mmap.mmap(pbg.mmap_fid.fileno(), length=0)
     ```
