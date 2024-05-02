@@ -46,7 +46,7 @@ def makeLabelWithQRCode(text, height, align, QRSize=None, layer=20, QRSavePath=N
     with nd.Cell(f'label_{text}') as labelWithQRCode:
         textPolygon = nd.text(text, height=height, align=align, layer=layer)
         textPolygon.put(0)
-        startPoint = (textPolygon.bbox[3]-textPolygon.bbox[1] + M/2*pixelSize, QRSize/2)
+        startPoint = (textPolygon.bbox[3]-textPolygon.bbox[1] + M/2*pixelSize*1.2, QRSize/2)
         for y in range(0, N):
             on = False
             xstart = 0
