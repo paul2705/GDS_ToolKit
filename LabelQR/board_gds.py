@@ -18,8 +18,12 @@ for i in range(-5000, 5000, 1000):
 
 # View Size: [1cm*1cm] -> 1mm*1mm
 nd.export_gds()
-
-
+'''
+Optimal Fibrer target point 
+photo detector 
+moving fiber -> target point Gaussian 
+Rotation fiber
+'''
 # ====================================Decoder Exmaple================================
 '''
 You can use decoder.readQRCode() to detect text (label) from Standard QRCode or Micro QRCode in the specified image

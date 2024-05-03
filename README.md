@@ -20,5 +20,22 @@ Usage:
     pbg.mmap_file = mmap.mmap(pbg.mmap_fid.fileno(), length=0)
     ```
 
+## phidl Interface
+An Interface converting phidl to nazca
+Usage:
+* Download phidl_Interface folder (you may git clone the repo or download repo zip [click green Code button, there will be a download zip button])
+* You may need both phidl and nazca library to run this 
+
+Example:
+Create a .py file in the directory where phidl_Interface folder locates, which means your .py file and phidl_Interface folder should in the same path (under the same folder)
+```python
+from phidl_Interface import convert
+from phidl import Device
+D = Device('example')
+... DO SOMETHING IN THE DEVICE ...
+convertedNAZCACell = convert.convertPhidlToNAZCA(D,layer=1)
+print(convertedNAZCACell)
+```
+
 ## Code
 Other code made previously
