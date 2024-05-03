@@ -21,7 +21,7 @@ Usage:
     ```
 
 ## phidl Interface
-An Interface converting phidl to nazca
+An Interface converting phidl to nazca (ONLY support one layer conversion. If there exists multiple layers, they will be combined into one specified layer)
 
 Usage:
 * Download phidl_Interface folder (you may git clone the repo or download repo zip [click green Code button, there will be a download zip button])
