@@ -96,11 +96,11 @@ import threading
 import queue
 
 def OptimSubmit():
-    # tk.Label(rightFrame, text = OptimLabel.cget("text")+" "+OptimTmp.get()).grid()
-    # OptimQuery.set(OptimTmp.get())
-    tmp = queryAPI(result)
-    tk.Label(rightFrame, text = OptimLabel.cget("text")+f" {tmp}").grid()
-    OptimQuery.set(tmp)
+    tk.Label(rightFrame, text = OptimLabel.cget("text")+" "+OptimTmp.get()).grid()
+    OptimQuery.set(OptimTmp.get())
+    # tmp = queryAPI(result)
+    # tk.Label(rightFrame, text = OptimLabel.cget("text")+f" {tmp}").grid()
+    # OptimQuery.set(tmp)
     inputReady.set()
 
 def queryAPI(list0):
@@ -118,6 +118,8 @@ def queryAPI(list0):
 
 def bayeOptimize():
     # Optimizer.bayesianOptimisation(sample_loss=queryAPI, bounds=np.array([[-10,10],[-10,10]]), n_iters=20)
+    for widget in rightFrame.winfo_children():
+        widget.grid_forget()
     OptimLabel.grid(row=4,column=0)
     OptimEntry.grid(row=4,column=1)
     OptimSubmit.grid(row=4,column=3)
