@@ -196,5 +196,8 @@ def bayesianOptimisation(n_iters, sample_loss, block_query, block_query_var, end
         xp = np.array(x_list)
         yp = np.array(y_list)
 
-    sample_loss.put(("Finish",next_sample,cv_score))
+    print(xp,yp)
+    retID = yp.argmax()
+    print(retID, xp[retID], yp[retID])
+    sample_loss.put(("Finish",xp[retID],yp[retID]))
     return xp, yp
