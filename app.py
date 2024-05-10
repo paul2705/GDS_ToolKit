@@ -31,28 +31,39 @@ rightFrame.grid(row=1, column=1, padx=10, pady=5)
 # OptionMenu
 #====================================
 def SmartOptionMenuCallback():
-    if optionMenu.get()=='QRCode Decoder':
+    if optionMenu.get()=='None':
+        for widget in leftFrame.winfo_children():
+            widget.grid_forget()
+        for widget in rightFrame.winfo_children():
+            widget.grid_forget()
+        endProgram.set()
+        OptimState.set(0)
+    elif optionMenu.get()=='QRCode Decoder':
         for widget in leftFrame.winfo_children():
             widget.grid_forget()
         for widget in rightFrame.winfo_children():
             widget.grid_forget()
         QROpenImageBtn.grid(row=1, column=0, padx=5, pady=5)
         QRDecoderBtn.grid(row=1, column=0, padx=5, pady=5)
+        endProgram.set()
+        OptimState.set(0)
     elif optionMenu.get()=='Optimal Fiber Point':
         for widget in leftFrame.winfo_children():
             widget.grid_forget()
         for widget in rightFrame.winfo_children():
             widget.grid_forget()
+        endProgram.clear()
+        OptimState.set(0)
         OptimLabelIter.grid(row=0, column=0, padx=5, pady=5)
         OptimEntryIter.grid(row=0, column=1, padx=5, pady=5)
         OptimLabelBound.grid(row=1, column=0, padx=5, pady=5)
         OptimEntryBound.grid(row=1, column=1, padx=5, pady=5)
         OptimBtn.grid(row=3, column=0, padx=5, pady=5)
         
-
-optionMenu = tk_tools.SmartOptionMenu(upFrame, ['QRCode Decoder', 'Optimal Fiber Point'])
+tk.Label(upFrame, text="Please choose the Tool you want to use: ").grid(row=0, column=0, padx=5, pady=5)
+optionMenu = tk_tools.SmartOptionMenu(upFrame, ['None', 'QRCode Decoder', 'Optimal Fiber Point'])
 optionMenu.add_callback(SmartOptionMenuCallback)
-optionMenu.grid(row=0, column=0, padx=5, pady=5)
+optionMenu.grid(row=0, column=1, padx=5, pady=5)
 
 #====================================
 # QRCode Decoder
@@ -123,6 +134,8 @@ def bayeOptimize():
     # Optimizer.bayesianOptimisation(sample_loss=queryAPI, bounds=np.array([[-10,10],[-10,10]]), n_iters=20)
     for widget in rightFrame.winfo_children():
         widget.grid_forget()
+    endProgram.set()
+    
     OptimLabel.grid(row=4,column=0)
     OptimEntry.grid(row=4,column=1)
     OptimSubmit.grid(row=4,column=3)
@@ -138,7 +151,9 @@ def bayeOptimize():
     bounds = []
     for i in range(0,tmpBounds.shape[0],2):
         bounds.append(tmpBounds[i:i+2])
-    print(iterations, tmpBounds, bounds)
+    # print(iterations, tmpBounds, bounds)
+    
+    endProgram.clear()
     global threadOptim
     threadOptim = threading.Thread(target=Optimizer.bayesianOptimisation,args=(iterations-5, queryPoints, inputReady, OptimQuery, endProgram, np.array(bounds)))
     threadOptim.daemon = True
