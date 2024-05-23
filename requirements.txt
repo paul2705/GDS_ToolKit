@@ -1,0 +1,15 @@
+bayesian_optimization==1.4.3
+gdspy==1.6.13
+klayout==0.29.0
+matplotlib==3.8.3
+numpy==1.26.4
+opencv_python==4.9.0.80
+phidl==1.7.1
+Pillow==10.3.0
+PyBoof==0.43.1
+qrcode==7.4.2
+qreader==3.12
+scikit_learn==1.4.2
+scipy==1.13.1
+segno==1.6.1
+tk_tools==0.16.0

@@ -2,7 +2,11 @@ import nazca as nd
 import nazca.geometries as geom
 from QRCode import encoderStandard, decoderStandard
 from QRCode import encoderMicro, decoderMicro
-
+'''
+Si grating: 1
+Si waveguide: 2
+SiN waveguide: 3
+'''
 # ====================================Encoder Exmaple================================
 '''
 You can use encoder.makeLabelWithQRCode() to create label text with its corresponding Standard QRCode or Micro QRCode

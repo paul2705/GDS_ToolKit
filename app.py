@@ -107,14 +107,14 @@ import threading
 import queue
 
 def OptimSubmit():
-    if (OptimTmp.get()==''):
-        tk.Label(rightFrame, text="Please Enter the Request Value").grid()
-        return
-    tk.Label(rightFrame, text = OptimLabel.cget("text")+" "+OptimTmp.get()).grid()
-    OptimQuery.set(OptimTmp.get())
-    # tmp = queryAPI(result)
-    # tk.Label(rightFrame, text = OptimLabel.cget("text")+f" {tmp}").grid()
-    # OptimQuery.set(tmp)
+    # if (OptimTmp.get()==''):
+    #     tk.Label(rightFrame, text="Please Enter the Request Value").grid()
+    #     return
+    # tk.Label(rightFrame, text = OptimLabel.cget("text")+" "+OptimTmp.get()).grid()
+    # OptimQuery.set(OptimTmp.get())
+    tmp = queryAPI(result)
+    tk.Label(rightFrame, text = OptimLabel.cget("text")+f" {tmp}").grid()
+    OptimQuery.set(tmp)
     inputReady.set()
 
 def queryAPI(list0):
