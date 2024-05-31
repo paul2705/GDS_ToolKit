@@ -186,7 +186,6 @@ def bayesianOptimisation(n_iters, sample_loss, block_query, block_query_var, end
 
         # Sample loss for new set of parameters
         # cv_score = sample_loss(next_sample)
-        print("FAQ")
         plotSingle(model, first_param_grid=XMesh, sampled_params=xp, sampled_loss=yp, nextSample=next_sample, second_param_grid=YMesh,
                 param_dims_to_plot=[0, 1], file_path='./GD_Optim/OutputImage', optimum=None)
 
@@ -213,5 +212,9 @@ def bayesianOptimisation(n_iters, sample_loss, block_query, block_query_var, end
     print(retID, xp[retID], yp[retID])
     sample_loss.put(("Finish",xp[retID],yp[retID]))
 
+    
+    plotSingle(model, first_param_grid=XMesh, sampled_params=xp, sampled_loss=yp, nextSample=xp[retID], second_param_grid=YMesh,
+            param_dims_to_plot=[0, 1], file_path='./GD_Optim/OutputImage', optimum=None)
 
+            
     return xp, yp

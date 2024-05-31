@@ -114,6 +114,7 @@ def OptimSubmit():
     # tk.Label(rightFrame, text = OptimLabel.cget("text")+" "+OptimTmp.get()).grid()
     # OptimQuery.set(OptimTmp.get())
     tmp = queryAPI(result)
+    OptimTmp.set(tmp)
 
     predictValue.config(text = OptimLabel.cget("text")+f" {tmp}")
     if os.path.exists("./GD_Optim/OutputImage/bo_iteration_0.png"):
@@ -194,9 +195,20 @@ def OptimRetrieveResult():
         if (result[0] == "Finish"):
             tk.Label(leftFrame, text = f"Optimization Finished! Optimal Position: {result[1]}, Optimal Value: {result[2]}").grid()
             OptimLabel.config(text=f"Input Coordination [Empty] Value:")
+            if os.path.exists("./GD_Optim/OutputImage/bo_iteration_0.png"):
+                img = Image.open(f'./GD_Optim/OutputImage/bo_iteration_0.png')
+                N, M = np.array(img).shape[:2]
+                if (N>M):
+                    img = img.resize((M*400//N, 400))
+                else:
+                    img = img.resize((400, N*400//M))
+                img = ImageTk.PhotoImage(img)
+                predictImage.config(image = img)
+                predictValue.image = img
         else:
             OptimLabel.config(text=f"Input Coordination {result} Value:")
         print("Received from Function F:", result)
+        OptimTmp.set('')
     except queue.Empty:
         print("No result available yet.")
     root.after(1000, OptimRetrieveResult) 
