@@ -1,4 +1,5 @@
 import tkinter as tk
+import os
 from PIL import ImageTk, Image
 from tkinter import filedialog
 import tk_tools
@@ -113,7 +114,19 @@ def OptimSubmit():
     # tk.Label(rightFrame, text = OptimLabel.cget("text")+" "+OptimTmp.get()).grid()
     # OptimQuery.set(OptimTmp.get())
     tmp = queryAPI(result)
-    tk.Label(rightFrame, text = OptimLabel.cget("text")+f" {tmp}").grid()
+
+    predictValue.config(text = OptimLabel.cget("text")+f" {tmp}")
+    if os.path.exists("./GD_Optim/OutputImage/bo_iteration_0.png"):
+        img = Image.open(f'./GD_Optim/OutputImage/bo_iteration_0.png')
+        N, M = np.array(img).shape[:2]
+        if (N>M):
+            img = img.resize((M*400//N, 400))
+        else:
+            img = img.resize((400, N*400//M))
+        img = ImageTk.PhotoImage(img)
+        predictImage.config(image = img)
+        predictValue.image = img
+
     OptimQuery.set(tmp)
     inputReady.set()
 
@@ -153,11 +166,22 @@ def bayeOptimize():
         bounds.append(tmpBounds[i:i+2])
     # print(iterations, tmpBounds, bounds)
     
+    if os.path.exists("./GD_Optim/OutputImage/bo_iteration_0.png"):
+        os.remove("./GD_Optim/OutputImage/bo_iteration_0.png")
+
     endProgram.clear()
     global threadOptim
-    threadOptim = threading.Thread(target=Optimizer.bayesianOptimisation,args=(iterations-5, queryPoints, inputReady, OptimQuery, endProgram, np.array(bounds)))
+    threadOptim = threading.Thread(target=Optimizer.bayesianOptimisation,args=(iterations-10, queryPoints, inputReady, OptimQuery, endProgram, np.array(bounds)))
     threadOptim.daemon = True
     threadOptim.start()
+
+    global predictImage
+    predictImage = tk.Label(rightFrame, text='')
+    predictImage.grid()
+    global predictValue
+    predictValue = tk.Label(rightFrame, image=None)
+    predictValue.image = None
+    predictValue.grid()
 
 
 def OptimRetrieveResult():
@@ -186,7 +210,7 @@ OptimBound = tk.StringVar()
 inputReady = threading.Event()
 endProgram = threading.Event()
 
-OptimLabelIter  = tk.Label(leftFrame, text = f"Input number of Iterations (>5):")
+OptimLabelIter  = tk.Label(leftFrame, text = f"Input number of Iterations (>10):")
 OptimEntryIter  = tk.Entry(leftFrame, textvariable = OptimIter)
 OptimLabelBound = tk.Label(leftFrame, text = f"Input bounds (e.g. xLow, xHigh, yLow, yHigh):")
 OptimEntryBound = tk.Entry(leftFrame, textvariable = OptimBound)

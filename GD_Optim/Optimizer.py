@@ -1,6 +1,7 @@
 """ Optimizer.py
 
 Bayesian optimisation of loss functions.
+
 """
 
 import numpy as np
@@ -10,6 +11,7 @@ from scipy.stats import norm
 from scipy.optimize import minimize
 
 import time
+from .plot import plotSingle
 
 def expectedImprovement(x, gaussian_process, evaluated_loss, greater_is_better=False, n_params=1):
     """ expectedImprovement
@@ -91,7 +93,7 @@ def sampleNextHyperparameter(acquisition_func, gaussian_process, evaluated_loss,
     return best_x
 
 
-def bayesianOptimisation(n_iters, sample_loss, block_query, block_query_var, end_program, bounds, x0=None, n_pre_samples=5,
+def bayesianOptimisation(n_iters, sample_loss, block_query, block_query_var, end_program, bounds, x0=None, n_pre_samples=10,
                           gp_params=None, random_search=False, alpha=1e-5, epsilon=1e-7):
     """ bayesianOptimisation
 
@@ -148,6 +150,10 @@ def bayesianOptimisation(n_iters, sample_loss, block_query, block_query_var, end
             y_list.append(float(block_query_var.get()))
             block_query.clear()
 
+    
+    XMesh = np.linspace(bounds[0][1], bounds[0][0], 50)
+    YMesh = np.linspace(bounds[1][1], bounds[1][0], 50)
+
     xp = np.array(x_list)
     yp = np.array(y_list)
 
@@ -166,6 +172,7 @@ def bayesianOptimisation(n_iters, sample_loss, block_query, block_query_var, end
         model.fit(xp, yp)
 
         # Sample next hyperparameter
+        # thuijskens
         if random_search:
             x_random = np.random.uniform(bounds[:, 0], bounds[:, 1], size=(random_search, n_params))
             ei = -1 * expectedImprovement(x_random, model, yp, greater_is_better=True, n_params=n_params)
@@ -179,6 +186,10 @@ def bayesianOptimisation(n_iters, sample_loss, block_query, block_query_var, end
 
         # Sample loss for new set of parameters
         # cv_score = sample_loss(next_sample)
+        print("FAQ")
+        plotSingle(model, first_param_grid=XMesh, sampled_params=xp, sampled_loss=yp, nextSample=next_sample, second_param_grid=YMesh,
+                param_dims_to_plot=[0, 1], file_path='./GD_Optim/OutputImage', optimum=None)
+
         sample_loss.put(next_sample)
         block_query.wait(timeout=1)
         while not end_program.is_set() and not block_query.is_set():
@@ -195,9 +206,12 @@ def bayesianOptimisation(n_iters, sample_loss, block_query, block_query_var, end
         # Update xp and yp
         xp = np.array(x_list)
         yp = np.array(y_list)
+        
 
     print(xp,yp)
     retID = yp.argmax()
     print(retID, xp[retID], yp[retID])
     sample_loss.put(("Finish",xp[retID],yp[retID]))
+
+
     return xp, yp
