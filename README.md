@@ -5,7 +5,9 @@ a comprehensive app gathering **QRCode Decoder** and **Fiber Point Optimization*
 * QRCode Decoder:
   * ![Decoder](doc/GDS_ToolKit_Decoder.png)
 * Fiber Point Optimization:
-  * ![Fiber Optim](doc/GDS_ToolKit_Fiber_Optim.png)
+  * ![Fiber Optim](doc/GDS_ToolKit_Fiber_Optim_Plot.png)
+  * The Sample Result for Gaussian Distribution centered at (1,2):
+    * ![Fiber Optim](doc/GDS_ToolKit_Fiber_Optim_Plot_Result.png)
 
 ## LabelQR
 a extended Toolkit for Nazca:

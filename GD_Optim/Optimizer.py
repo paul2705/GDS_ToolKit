@@ -206,7 +206,6 @@ def bayesianOptimisation(n_iters, sample_loss, block_query, block_query_var, end
         xp = np.array(x_list)
         yp = np.array(y_list)
         
-
     print(xp,yp)
     retID = yp.argmax()
     print(retID, xp[retID], yp[retID])
@@ -216,5 +215,5 @@ def bayesianOptimisation(n_iters, sample_loss, block_query, block_query_var, end
     plotSingle(model, first_param_grid=XMesh, sampled_params=xp, sampled_loss=yp, nextSample=xp[retID], second_param_grid=YMesh,
             param_dims_to_plot=[0, 1], file_path='./GD_Optim/OutputImage', optimum=None)
 
-            
+
     return xp, yp
