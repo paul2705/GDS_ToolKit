@@ -9,12 +9,14 @@ You can use encoder.makeLabelWithQRCode() to create label text with its correspo
 The usage of encoder.makeLabelWithQRCode() is similar to nd.text()
 For details of parameters meanings please refer to ./QRCode/encoderStandard.py or ./QRCode/encoderMicro.py
 '''
-encoderStandard.makeLabelWithQRCode(text='D25S50WG10',height=20,align='cc',QRSize=80,KlayoutDecode=True,layer=2).put(0)
-encoderStandard.makeLabelWithQRCode(text='D50S150WG6',height=0.2,align='cc',QRSize=0.8,layer=2).put(600)
-encoderStandard.makeLabelWithQRCode(text='ABC',height=40,align='cc',layer=2).put(200, 400)
-encoderStandard.makeLabelWithQRCode(text='TEST',height=80,align='cc',layer=1).put(-200, 800)
+encoderStandard.makeLabelWithQRCode(text='D25S50WG10',height=20,align='cc',QRSize=80,KlayoutDecode=True,layer=2,QRSavePath='./D25S50WG10.png').put(0)
+encoderStandard.makeLabelWithQRCode(text='D50S150WG6',height=0.2,align='cc',QRSize=0.8,layer=2,QRSavePath='./D50S150WG6.png').put(600)
+# encoderStandard.makeLabelWithQRCode(text='ABC',height=40,align='cc',layer=2).put(200, 400)
+encoderStandard.makeLabelWithQRCode(text='ABC',height=40,align='cc',KlayoutDecode=True,layer=2,QRSavePath='./ABC.png').put(200, 400)
+# encoderStandard.makeLabelWithQRCode(text='TEST',height=80,align='cc',layer=1).put(-200, 800)
+encoderStandard.makeLabelWithQRCode(text='TEST',height=80,align='cc',KlayoutDecode=True,layer=1,QRSavePath='./TEST.png').put(-200, 800)
 
-encoderMicro.makeLabelWithQRCode(text='D250S6WG8',height=20,align='cc',QRSize=60,layer=3).put(400, 200)
+encoderMicro.makeLabelWithQRCode(text='D250S6WG8',height=20,align='cc',QRSize=60,layer=3,QRSavePath='./D250S6WG8.png').put(400, 200)
 
 # Bar Code
 

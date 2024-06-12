@@ -45,7 +45,7 @@ def makeQRCode(text, height, align, QRSize=None, layer=20, KlayoutDecode=False, 
 
     # image_geo = db.Region()
     with nd.Cell(f'label_{text}') as labelWithQRCode:
-        startPoint = (0, 0)
+        startPoint = (-N/2.0 * pixelSize, M/2.0 * pixelSize)
         for y in range(0, N):
             on = False
             xstart = 0

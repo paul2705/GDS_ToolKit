@@ -18,12 +18,12 @@ The usage of encoder.makeLabelWithQRCode() is similar to nd.text()
 For details of parameters meanings please refer to ./QRCode/encoderStandard.py or ./QRCode/encoderMicro.py
 '''
 # encoderStandard.makeQRCode(text='D50S150WG6',height=0.2,align='cc',QRSize=0.8,layer=2).put(600)
-for i in range(-7000, 7000, 1000):
-    for j in range(-5000, 0000, 1000):
-        encoderStandard.makeQRCode(text='@({:d}, {:d})'.format(i,j),height=10*(((i+7000)/1000)%4+1),align='cc',layer=0).put(i, j)
+# for i in range(-7000, 7000, 1000):
+#     for j in range(-5000, 0000, 1000):
+#         encoderStandard.makeQRCode(text='@({:d}, {:d})'.format(i,j),height=10*(((i+7000)/1000)%4+1),align='cc',layer=0).put(i, j)
 # 500 nm resolution
 # vary size
-
+encoderStandard.makeQRCode(text='@({:d}, {:d})'.format(0,0),height=10*(((0+7000)/1000)%4+1),align='cc',layer=0).put(0,0)
 
 # Bar Code
 
