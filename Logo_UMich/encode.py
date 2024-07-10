@@ -21,13 +21,13 @@ def make(height, align, Size=None, layer=20, KlayoutDecode=False, QRSavePath=Non
     Returns:
         Cell: flattened NAZCA cell with text ploygons and QRCode ploygons.
     """
-    image = np.array(Image.open('./umich.png').convert('RGB'))
+    image = np.array(Image.open('./Block_M-Hex.png').convert('RGB'))
     N, M, C = image.shape
-    # colList = Image.Image.getcolors(Image.open('./umich.png').convert('RGB'),maxcolors=1024)
-    # dtype = [('count', int), ('rbg', tuple)]
-    # newList = np.array(colList, dtype=dtype)
-    # sortList = np.sort(newList, order='count')
-    # print(sortList)
+    colList = Image.Image.getcolors(Image.open('./Block_M-Hex.png').convert('RGB'),maxcolors=1024)
+    dtype = [('count', int), ('rbg', tuple)]
+    newList = np.array(colList, dtype=dtype)
+    sortList = np.sort(newList, order='count')
+    print(sortList)
     # plt.plot(image)
     # plt.show()
 
@@ -51,7 +51,9 @@ def make(height, align, Size=None, layer=20, KlayoutDecode=False, QRSavePath=Non
             xstart = 0
             for x in range(0, M):
                 # value = (image[y, x, :] == [248, 230, 24]).any() #yellow
-                value = (image[y, x, :] == [18, 24, 73]).any() #blue
+                # value = (image[y, x, :] == [18, 24, 73]).any() #blue
+                
+                value = (image[y, x, :] == [255, 203, 5]).all() #yellow
                 # print(value)
                 if value != on:
                     on = value
@@ -109,12 +111,14 @@ def __merge_cell_polygons(cell):
 if __name__=='__main__':
     logo = make(height=40,align='cc',layer=0)
 
-    with nd.Cell(name=f"logoImproved") as C: #blue
-        for P in nd.cell_iter(logo, flat=True):
-            if P.cell_start:
-                for pgon, xy, bbox in P.iters['polygon']:
-                    if (np.array(xy).shape[0])>5:
-                        nd.Polygon(points=xy, layer=0).put(0)
-    C.put()
+    # with nd.Cell(name=f"logoImproved") as C: #blue
+    #     for P in nd.cell_iter(logo, flat=True):
+    #         if P.cell_start:
+    #             for pgon, xy, bbox in P.iters['polygon']:
+    #                 if (np.array(xy).shape[0])>5:
+    #                     nd.Polygon(points=xy, layer=0).put(0)
+    # C.put()
+
+    logo.put()
 
     nd.export_gds()

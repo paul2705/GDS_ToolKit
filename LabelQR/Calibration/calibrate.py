@@ -44,7 +44,7 @@ def calculateRotation(quadPoints):
 
 
 if __name__=='__main__':
-    ret = readQRCode('../QRCode/example9_29_2.png')
+    ret = readQRCode('../QRCode/example8_-12_5.png')
     print(len(ret[1]),ret[0])
     rotationAngle = 0
     cnt = 0
